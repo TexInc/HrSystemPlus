@@ -3,17 +3,20 @@ package com.texinc.loytesting.hrsystemplus.controller;
 import com.texinc.loytesting.hrsystemplus.bean.Employee;
 import com.texinc.loytesting.hrsystemplus.bean.Position;
 import com.texinc.loytesting.hrsystemplus.bean.RespBean;
+import com.texinc.loytesting.hrsystemplus.common.poi.PoiUtils;
 import com.texinc.loytesting.hrsystemplus.service.DepartmentService;
 import com.texinc.loytesting.hrsystemplus.service.EmpService;
+import com.texinc.loytesting.hrsystemplus.service.JobLevelService;
+import com.texinc.loytesting.hrsystemplus.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.thymeleaf.TemplateEngine;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author i@loyio.me
@@ -30,12 +33,9 @@ public class EmpController {
     PositionService positionService;
     @Autowired
     JobLevelService jobLevelService;
-    @Autowired
-    ExecutorService executorService;
+
     @Autowired
     TemplateEngine templateEngine;
-    @Autowired
-    JavaMailSender javaMailSender;
 
     @RequestMapping(value = "/basicdata", method = RequestMethod.GET)
     public Map<String, Object> getAllNations() {
@@ -63,8 +63,6 @@ public class EmpController {
                     employee.setPosName(allPo.getName());
                 }
             }
-            executorService.execute(new EmailRunnable(employee,
-                    javaMailSender, templateEngine));
             return RespBean.ok("添加成功!");
         }
         return RespBean.error("添加失败!");

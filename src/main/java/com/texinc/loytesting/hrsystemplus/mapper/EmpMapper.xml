@@ -2,14 +2,14 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.texinc.loytesting.hrsystemplus">
-    <select id="getAllNations" resultType="com.texinc.loytesting.hrsystemplusbean.Nation">
+<mapper namespace="com.texinc.loytesting.hrsystemplus.mapper.EmpMapper">
+    <select id="getAllNations" resultType="com.texinc.loytesting.hrsystemplus.bean.Nation">
         select * from nation;
     </select>
-    <select id="getAllPolitics" resultType="com.texinc.loytesting.hrsystemplusbean.PoliticsStatus">
+    <select id="getAllPolitics" resultType="com.texinc.loytesting.hrsystemplus.bean.PoliticsStatus">
         select * from politicsstatus;
     </select>
-    <insert id="addEmp" parameterType="com.texinc.loytesting.hrsystemplusbean.Employee">
+    <insert id="addEmp" parameterType="com.texinc.loytesting.hrsystemplus.bean.Employee">
         insert into employee (name, gender,
         birthday, idCard, wedlock, nationId,
         nativePlace, politicId, email,
@@ -34,7 +34,7 @@
     <select id="getMaxWorkID" resultType="Long">
         SELECT workID from employee where id=(select max(id) from employee)
     </select>
-    <resultMap id="BaseResultMap" type="com.texinc.loytesting.hrsystemplusbean.Employee">
+    <resultMap id="BaseResultMap" type="com.texinc.loytesting.hrsystemplus.bean.Employee">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="gender" property="gender"/>
@@ -63,28 +63,28 @@
         <result column="beginContract" property="beginContract"/>
         <result column="endContract" property="endContract"/>
         <result column="workAge" property="workAge"/>
-        <association property="department" javaType="com.texinc.loytesting.hrsystemplusbean.Department">
+        <association property="department" javaType="com.texinc.loytesting.hrsystemplus.bean.Department">
             <id property="id" column="did"/>
             <result property="name" column="dname"/>
         </association>
-        <association property="jobLevel" javaType="com.texinc.loytesting.hrsystemplusbean.JobLevel">
+        <association property="jobLevel" javaType="com.texinc.loytesting.hrsystemplus.bean.JobLevel">
             <id property="id" column="jlid"/>
             <result property="name" column="jlname"/>
             <result property="titleLevel" column="jlTitleLevel"/>
         </association>
-        <association property="nation" javaType="com.texinc.loytesting.hrsystemplusbean.Nation">
+        <association property="nation" javaType="com.texinc.loytesting.hrsystemplus.bean.Nation">
             <id property="id" column="nid"/>
             <result property="name" column="nname"/>
         </association>
-        <association property="position" javaType="com.texinc.loytesting.hrsystemplusbean.Position">
+        <association property="position" javaType="com.texinc.loytesting.hrsystemplus.bean.Position">
             <id property="id" column="pid"/>
             <result property="name" column="pname"/>
         </association>
-        <association property="politicsStatus" javaType="com.texinc.loytesting.hrsystemplusbean.PoliticsStatus">
+        <association property="politicsStatus" javaType="com.texinc.loytesting.hrsystemplus.bean.PoliticsStatus">
             <id property="id" column="psid"/>
             <result property="name" column="psname"/>
         </association>
-        <association property="salary" javaType="com.texinc.loytesting.hrsystemplusbean.Salary">
+        <association property="salary" javaType="com.texinc.loytesting.hrsystemplus.bean.Salary">
             <id column="sid" jdbcType="INTEGER" property="id" />
             <result column="bonus" jdbcType="INTEGER" property="bonus" />
             <result column="lunchSalary" jdbcType="INTEGER" property="lunchSalary" />
