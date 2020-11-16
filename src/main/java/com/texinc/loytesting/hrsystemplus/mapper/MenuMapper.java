@@ -15,6 +15,8 @@ public interface MenuMapper {
 
     List<Menu> getMenusByHrId(Long hrId);
 
+    List<Menu> getAllMenusWithRole();
+
     List<Menu> menuTree();
 
     List<Long> getMenusByRid(Long rid);

@@ -8,7 +8,7 @@ import org.springframework.cache.annotation.EnableCaching;
 
 @MapperScan("com.texinc.loytesting.hrsystemplus.mapper")
 @EnableCaching
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
+@SpringBootApplication
 public class HrsystemplusApplication {
 
     public static void main(String[] args) {

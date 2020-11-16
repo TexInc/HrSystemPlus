@@ -5,6 +5,7 @@ import com.texinc.loytesting.hrsystemplus.common.HrUtils;
 import com.texinc.loytesting.hrsystemplus.mapper.MenuMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +22,11 @@ public class MenuService {
     @Autowired
     MenuMapper menuMapper;
 
-    //    @Cacheable(key = "#root.methodName")
+    @Cacheable
+    public List<Menu> getAllMenusWithRole() {
+        return menuMapper.getAllMenusWithRole();
+    }
+
     public List<Menu> getAllMenu(){
         return menuMapper.getAllMenu();
     }
