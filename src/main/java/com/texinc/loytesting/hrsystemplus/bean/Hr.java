@@ -8,67 +8,45 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author i@loyio.me
  * @date 2020/11/12 3:34 PM
  */
 public class Hr implements UserDetails {
-    private Long id;
+    private Integer id;
+
     private String name;
+
     private String phone;
+
     private String telephone;
+
     private String address;
-    private boolean enabled;
+
+    private Boolean enabled;
+
     private String username;
+
     private String password;
+
+    private String userface;
+
     private String remark;
     private List<Role> roles;
-    private String userface;
+
     @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-    @Override
-    public String getUsername() {
-        return username;
-    }
-    @JsonIgnore
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-    @JsonIgnore
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-    @JsonIgnore
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-    @JsonIgnore
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        }
-        return authorities;
-    }
-    @JsonIgnore
-    @Override
-    public String getPassword() {
-        return password;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Hr hr = (Hr) o;
+        return Objects.equals(username, hr.username);
     }
 
-    public String getUserface() {
-        return userface;
-    }
-
-    public void setUserface(String userface) {
-        this.userface = userface;
+    @Override
+    public int hashCode() {
+        return Objects.hash(username);
     }
 
     public List<Role> getRoles() {
@@ -79,11 +57,11 @@ public class Hr implements UserDetails {
         this.roles = roles;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -92,7 +70,7 @@ public class Hr implements UserDetails {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name == null ? null : name.trim();
     }
 
     public String getPhone() {
@@ -100,7 +78,7 @@ public class Hr implements UserDetails {
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        this.phone = phone == null ? null : phone.trim();
     }
 
     public String getTelephone() {
@@ -108,7 +86,7 @@ public class Hr implements UserDetails {
     }
 
     public void setTelephone(String telephone) {
-        this.telephone = telephone;
+        this.telephone = telephone == null ? null : telephone.trim();
     }
 
     public String getAddress() {
@@ -116,20 +94,65 @@ public class Hr implements UserDetails {
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        this.address = address == null ? null : address.trim();
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username == null ? null : username.trim();
+    }
+
+    @Override
+    @JsonIgnore
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>(roles.size());
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        return authorities;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password == null ? null : password.trim();
+    }
+
+    public String getUserface() {
+        return userface;
+    }
+
+    public void setUserface(String userface) {
+        this.userface = userface == null ? null : userface.trim();
     }
 
     public String getRemark() {
@@ -137,6 +160,6 @@ public class Hr implements UserDetails {
     }
 
     public void setRemark(String remark) {
-        this.remark = remark;
+        this.remark = remark == null ? null : remark.trim();
     }
 }

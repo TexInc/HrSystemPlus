@@ -1,5 +1,7 @@
 package com.texinc.loytesting.hrsystemplus.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
@@ -8,18 +10,32 @@ import java.util.Date;
  */
 public class Salary {
     private Integer id;
-    private Integer bonus;
-    private Integer lunchSalary;
-    private Integer trafficSalary;
+
     private Integer basicSalary;
+
+    private Integer bonus;
+
+    private Integer lunchSalary;
+
+    private Integer trafficSalary;
+
     private Integer allSalary;
+
     private Integer pensionBase;
+
     private Float pensionPer;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date createDate;
+
     private Integer medicalBase;
+
     private Float medicalPer;
+
     private Integer accumulationFundBase;
+
     private Float accumulationFundPer;
+
     private String name;
 
     public Integer getId() {
@@ -28,6 +44,14 @@ public class Salary {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getBasicSalary() {
+        return basicSalary;
+    }
+
+    public void setBasicSalary(Integer basicSalary) {
+        this.basicSalary = basicSalary;
     }
 
     public Integer getBonus() {
@@ -52,14 +76,6 @@ public class Salary {
 
     public void setTrafficSalary(Integer trafficSalary) {
         this.trafficSalary = trafficSalary;
-    }
-
-    public Integer getBasicSalary() {
-        return basicSalary;
-    }
-
-    public void setBasicSalary(Integer basicSalary) {
-        this.basicSalary = basicSalary;
     }
 
     public Integer getAllSalary() {

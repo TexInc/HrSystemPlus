@@ -1,40 +1,44 @@
 package com.texinc.loytesting.hrsystemplus.bean;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 /**
  * @author i@loyio.me
  * @date 2020/11/12 3:50 PM
  */
-public class Nation {
-    private Long id;
+public class Nation implements Serializable {
+    private Integer id;
+
     private String name;
-
-    public Nation(String name) {
-        this.name = name;
-    }
-
-    public Nation() {
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Nation nation = (Nation) o;
+        return Objects.equals(name, nation.name);
+    }
 
-        return name != null ? name.equals(nation.name) : nation.name == null;
+    public Nation() {
+    }
+
+    public Nation(String name) {
+
+        this.name = name;
     }
 
     @Override
     public int hashCode() {
-        return name != null ? name.hashCode() : 0;
+
+        return Objects.hash(name);
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -43,6 +47,6 @@ public class Nation {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name == null ? null : name.trim();
     }
 }

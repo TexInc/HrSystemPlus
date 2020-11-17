@@ -7,23 +7,17 @@ import java.io.Serializable;
  * @date 2020/11/12 3:38 PM
  */
 public class Role implements Serializable {
-    private Long id;
+    private Integer id;
+
     private String name;
+
     private String nameZh;
 
-    public String getNameZh() {
-        return nameZh;
-    }
-
-    public void setNameZh(String nameZh) {
-        this.nameZh = nameZh;
-    }
-
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -32,6 +26,14 @@ public class Role implements Serializable {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getNameZh() {
+        return nameZh;
+    }
+
+    public void setNameZh(String nameZh) {
+        this.nameZh = nameZh;
     }
 }
