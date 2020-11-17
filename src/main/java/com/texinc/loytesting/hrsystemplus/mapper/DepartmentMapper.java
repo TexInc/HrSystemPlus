@@ -12,11 +12,23 @@ import java.util.List;
  */
 @Mapper
 public interface DepartmentMapper {
-    void addDep(@Param("dep") Department department);
+    int deleteByPrimaryKey(Integer id);
 
-    void deleteDep(@Param("dep") Department department);
+    int insert(Department record);
 
-    List<Department> getDepByPid(Long pid);
+    int insertSelective(Department record);
 
-    List<Department> getAllDeps();
+    Department selectByPrimaryKey(Integer id);
+
+    int updateByPrimaryKeySelective(Department record);
+
+    int updateByPrimaryKey(Department record);
+
+    List<Department> getAllDepartmentsByParentId(Integer pid);
+
+    void addDep(Department dep);
+
+    void deleteDepById(Department dep);
+
+    List<Department> getAllDepartmentsWithOutChildren();
 }

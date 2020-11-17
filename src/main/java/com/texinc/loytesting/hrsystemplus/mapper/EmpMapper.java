@@ -16,23 +16,29 @@ import java.util.List;
  */
 @Mapper
 public interface EmpMapper {
-    List<Nation> getAllNations();
+    int deleteByPrimaryKey(Integer id);
 
-    List<PoliticsStatus> getAllPolitics();
+    int insert(Employee record);
 
-    int addEmp(Employee employee);
+    int insertSelective(Employee record);
 
-    Long getMaxWorkID();
+    Employee selectByPrimaryKey(Integer id);
 
-    List<Employee> getEmployeeByPage(@Param("start") Integer start, @Param("size") Integer size, @Param("keywords") String keywords, @Param("politicId") Long politicId, @Param("nationId") Long nationId, @Param("posId") Long posId, @Param("jobLevelId") Long jobLevelId, @Param("engageForm") String engageForm, @Param("departmentId")Long  departmentId, @Param("startBeginDate") Date startBeginDate, @Param("endBeginDate") Date endBeginDate);
+    int updateByPrimaryKeySelective(Employee record);
 
-    Long getCountByKeywords(@Param("keywords") String keywords, @Param("politicId") Long politicId, @Param("nationId") Long nationId, @Param("posId") Long posId, @Param("jobLevelId") Long jobLevelId, @Param("engageForm") String engageForm, @Param("departmentId")Long  departmentId, @Param("startBeginDate") Date startBeginDate, @Param("endBeginDate") Date endBeginDate);
+    int updateByPrimaryKey(Employee record);
 
-    int updateEmp(@Param("emp") Employee employee);
+    List<Employee> getEmployeeByPage(@Param("page") Integer page, @Param("size") Integer size, @Param("emp") Employee employee,@Param("beginDateScope") Date[] beginDateScope);
 
-    int deleteEmpById(@Param("ids") String[] ids);
+    Long getTotal(@Param("emp") Employee employee,@Param("beginDateScope") Date[] beginDateScope);
 
-    int addEmps(@Param("emps") List<Employee> emps);
+    Integer maxWorkID();
 
-    List<Employee> getEmployeeByPageShort(@Param("start") int start, @Param("size") Integer size);
+    Integer addEmps(@Param("list") List<Employee> list);
+
+    Employee getEmployeeById(Integer id);
+
+    List<Employee> getEmployeeByPageWithSalary(@Param("page") Integer page, @Param("size") Integer size);
+
+    Integer updateEmployeeSalaryById(@Param("eid") Integer eid, @Param("sid") Integer sid);
 }
