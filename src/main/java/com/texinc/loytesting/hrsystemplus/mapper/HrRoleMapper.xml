@@ -2,46 +2,48 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.texinc.loytesting.hrsystemplus.mapper.MenuRoleMapper" >
-    <resultMap id="BaseResultMap" type="com.texinc.loytesting.hrsystemplus.bean.MenuRole" >
+<mapper namespace="com.texinc.loytesting.hrsystemplus.mapper.HrRoleMapper" >
+    <resultMap id="BaseResultMap" type="com.texinc.loytesting.hrsystemplus.bean.HrRole" >
         <id column="id" property="id" jdbcType="INTEGER" />
-        <result column="mid" property="mid" jdbcType="INTEGER" />
+        <result column="hrid" property="hrid" jdbcType="INTEGER" />
         <result column="rid" property="rid" jdbcType="INTEGER" />
     </resultMap>
     <sql id="Base_Column_List" >
-    id, mid, rid
+    id, hrid, rid
   </sql>
-    <delete id="deleteByRid">
-    delete from menu_role where rid=#{rid}
+    <delete id="deleteByHrid">
+    delete from hr_role where hrid=#{hrid}
   </delete>
-    <insert id="insertRecord">
-        insert into menu_role (mid,rid) values
-        <foreach collection="mids" separator="," item="mid">
-            (#{mid},#{rid})
+    <insert id="addRole">
+        insert into hr_role (hrid,rid) values
+        <foreach collection="rids" item="rid" separator=",">
+            (#{hrid},#{rid})
         </foreach>
     </insert>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         select
         <include refid="Base_Column_List" />
-        from menu_role
+        from hr_role
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from menu_role
+    delete from hr_role
     where id = #{id,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="com.texinc.loytesting.hrsystemplus.bean.MenuRole" >
-    insert into menu_role (id, mid, rid)
-    values (#{id,jdbcType=INTEGER}, #{mid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER})
+    <insert id="insert" parameterType="com.texinc.loytesting.hrsystemplus.bean.HrRole" >
+    insert into hr_role (id, hrid, rid
+      )
+    values (#{id,jdbcType=INTEGER}, #{hrid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER}
+      )
   </insert>
-    <insert id="insertSelective" parameterType="com.texinc.loytesting.hrsystemplus.bean.MenuRole" >
-        insert into menu_role
+    <insert id="insertSelective" parameterType="com.texinc.loytesting.hrsystemplus.bean.HrRole" >
+        insert into hr_role
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="id != null" >
                 id,
             </if>
-            <if test="mid != null" >
-                mid,
+            <if test="hrid != null" >
+                hrid,
             </if>
             <if test="rid != null" >
                 rid,
@@ -51,19 +53,19 @@
             <if test="id != null" >
                 #{id,jdbcType=INTEGER},
             </if>
-            <if test="mid != null" >
-                #{mid,jdbcType=INTEGER},
+            <if test="hrid != null" >
+                #{hrid,jdbcType=INTEGER},
             </if>
             <if test="rid != null" >
                 #{rid,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.texinc.loytesting.hrsystemplus.bean.MenuRole" >
-        update menu_role
+    <update id="updateByPrimaryKeySelective" parameterType="com.texinc.loytesting.hrsystemplus.bean.HrRole" >
+        update hr_role
         <set >
-            <if test="mid != null" >
-                mid = #{mid,jdbcType=INTEGER},
+            <if test="hrid != null" >
+                hrid = #{hrid,jdbcType=INTEGER},
             </if>
             <if test="rid != null" >
                 rid = #{rid,jdbcType=INTEGER},
@@ -71,9 +73,9 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.texinc.loytesting.hrsystemplus.bean.MenuRole" >
-    update menu_role
-    set mid = #{mid,jdbcType=INTEGER},
+    <update id="updateByPrimaryKey" parameterType="com.texinc.loytesting.hrsystemplus.bean.HrRole" >
+    update hr_role
+    set hrid = #{hrid,jdbcType=INTEGER},
       rid = #{rid,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

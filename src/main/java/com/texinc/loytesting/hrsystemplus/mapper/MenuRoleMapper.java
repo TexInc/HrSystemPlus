@@ -1,5 +1,6 @@
 package com.texinc.loytesting.hrsystemplus.mapper;
 
+import com.texinc.loytesting.hrsystemplus.bean.MenuRole;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -11,7 +12,19 @@ import java.util.List;
  */
 @Mapper
 public interface MenuRoleMapper {
-    int deleteMenuByRid(@Param("rid") Long rid);
+    int deleteByPrimaryKey(Integer id);
 
-    int addMenu(@Param("rid") Long rid, @Param("mids") Long[] mids);
+    int insert(MenuRole record);
+
+    int insertSelective(MenuRole record);
+
+    MenuRole selectByPrimaryKey(Integer id);
+
+    int updateByPrimaryKeySelective(MenuRole record);
+
+    int updateByPrimaryKey(MenuRole record);
+
+    void deleteByRid(Integer rid);
+
+    Integer insertRecord(@Param("rid") Integer rid, @Param("mids") Integer[] mids);
 }

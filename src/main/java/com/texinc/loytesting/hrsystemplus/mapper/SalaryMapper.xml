@@ -3,76 +3,204 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.texinc.loytesting.hrsystemplus.mapper.SalaryMapper">
-    <insert id="addSalary" parameterType="com.texinc.loytesting.hrsystemplus.bean.Salary">
-            insert into salary (bonus, lunchSalary,
-      trafficSalary, basicSalary,
+    <resultMap id="BaseResultMap" type="com.texinc.loytesting.hrsystemplus.bean.Salary">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="basicSalary" property="basicSalary" jdbcType="INTEGER"/>
+        <result column="bonus" property="bonus" jdbcType="INTEGER"/>
+        <result column="lunchSalary" property="lunchSalary" jdbcType="INTEGER"/>
+        <result column="trafficSalary" property="trafficSalary" jdbcType="INTEGER"/>
+        <result column="allSalary" property="allSalary" jdbcType="INTEGER"/>
+        <result column="pensionBase" property="pensionBase" jdbcType="INTEGER"/>
+        <result column="pensionPer" property="pensionPer" jdbcType="REAL"/>
+        <result column="createDate" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="medicalBase" property="medicalBase" jdbcType="INTEGER"/>
+        <result column="medicalPer" property="medicalPer" jdbcType="REAL"/>
+        <result column="accumulationFundBase" property="accumulationFundBase" jdbcType="INTEGER"/>
+        <result column="accumulationFundPer" property="accumulationFundPer" jdbcType="REAL"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, basicSalary, bonus, lunchSalary, trafficSalary, allSalary, pensionBase, pensionPer,
+    createDate, medicalBase, medicalPer, accumulationFundBase, accumulationFundPer, name
+  </sql>
+    <select id="getAllSalaries" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from salary
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from salary
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from salary
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.texinc.loytesting.hrsystemplus.bean.Salary">
+    insert into salary (id, basicSalary, bonus,
+      lunchSalary, trafficSalary, allSalary,
       pensionBase, pensionPer, createDate,
       medicalBase, medicalPer, accumulationFundBase,
       accumulationFundPer, name)
-    values (#{salary.bonus,jdbcType=INTEGER}, #{salary.lunchSalary,jdbcType=INTEGER},
-      #{salary.trafficSalary,jdbcType=INTEGER}, #{salary.basicSalary,jdbcType=INTEGER},
-      #{salary.pensionBase,jdbcType=INTEGER}, #{salary.pensionPer,jdbcType=REAL}, #{salary.createDate,jdbcType=TIMESTAMP},
-      #{salary.medicalBase,jdbcType=INTEGER}, #{salary.medicalPer,jdbcType=REAL}, #{salary.accumulationFundBase,jdbcType=INTEGER},
-      #{salary.accumulationFundPer,jdbcType=REAL}, #{salary.name,jdbcType=VARCHAR})
+    values (#{id,jdbcType=INTEGER}, #{basicSalary,jdbcType=INTEGER}, #{bonus,jdbcType=INTEGER},
+      #{lunchSalary,jdbcType=INTEGER}, #{trafficSalary,jdbcType=INTEGER}, #{allSalary,jdbcType=INTEGER},
+      #{pensionBase,jdbcType=INTEGER}, #{pensionPer,jdbcType=REAL}, #{createDate,jdbcType=TIMESTAMP},
+      #{medicalBase,jdbcType=INTEGER}, #{medicalPer,jdbcType=REAL}, #{accumulationFundBase,jdbcType=INTEGER},
+      #{accumulationFundPer,jdbcType=REAL}, #{name,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.texinc.loytesting.hrsystemplus.bean.Salary">
+        insert into salary
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="basicSalary != null">
+                basicSalary,
+            </if>
+            <if test="bonus != null">
+                bonus,
+            </if>
+            <if test="lunchSalary != null">
+                lunchSalary,
+            </if>
+            <if test="trafficSalary != null">
+                trafficSalary,
+            </if>
+            <if test="allSalary != null">
+                allSalary,
+            </if>
+            <if test="pensionBase != null">
+                pensionBase,
+            </if>
+            <if test="pensionPer != null">
+                pensionPer,
+            </if>
+            <if test="createDate != null">
+                createDate,
+            </if>
+            <if test="medicalBase != null">
+                medicalBase,
+            </if>
+            <if test="medicalPer != null">
+                medicalPer,
+            </if>
+            <if test="accumulationFundBase != null">
+                accumulationFundBase,
+            </if>
+            <if test="accumulationFundPer != null">
+                accumulationFundPer,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="basicSalary != null">
+                #{basicSalary,jdbcType=INTEGER},
+            </if>
+            <if test="bonus != null">
+                #{bonus,jdbcType=INTEGER},
+            </if>
+            <if test="lunchSalary != null">
+                #{lunchSalary,jdbcType=INTEGER},
+            </if>
+            <if test="trafficSalary != null">
+                #{trafficSalary,jdbcType=INTEGER},
+            </if>
+            <if test="allSalary != null">
+                #{allSalary,jdbcType=INTEGER},
+            </if>
+            <if test="pensionBase != null">
+                #{pensionBase,jdbcType=INTEGER},
+            </if>
+            <if test="pensionPer != null">
+                #{pensionPer,jdbcType=REAL},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="medicalBase != null">
+                #{medicalBase,jdbcType=INTEGER},
+            </if>
+            <if test="medicalPer != null">
+                #{medicalPer,jdbcType=REAL},
+            </if>
+            <if test="accumulationFundBase != null">
+                #{accumulationFundBase,jdbcType=INTEGER},
+            </if>
+            <if test="accumulationFundPer != null">
+                #{accumulationFundPer,jdbcType=REAL},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+        </trim>
     </insert>
-    <select id="getAllSalary" resultType="com.texinc.loytesting.hrsystemplus.bean.Salary">
-        SELECT * FROM salary;
-    </select>
-    <update id="updateSalary" parameterType="com.texinc.loytesting.hrsystemplus.bean.Salary">
+    <update id="updateByPrimaryKeySelective" parameterType="com.texinc.loytesting.hrsystemplus.bean.Salary">
         update salary
         <set>
-            <if test="salary.bonus != null">
-                bonus = #{salary.bonus,jdbcType=INTEGER},
+            <if test="basicSalary != null">
+                basicSalary = #{basicSalary,jdbcType=INTEGER},
             </if>
-            <if test="salary.lunchSalary != null">
-                lunchSalary = #{salary.lunchSalary,jdbcType=INTEGER},
+            <if test="bonus != null">
+                bonus = #{bonus,jdbcType=INTEGER},
             </if>
-            <if test="salary.trafficSalary != null">
-                trafficSalary = #{salary.trafficSalary,jdbcType=INTEGER},
+            <if test="lunchSalary != null">
+                lunchSalary = #{lunchSalary,jdbcType=INTEGER},
             </if>
-            <if test="salary.basicSalary != null">
-                basicSalary = #{salary.basicSalary,jdbcType=INTEGER},
+            <if test="trafficSalary != null">
+                trafficSalary = #{trafficSalary,jdbcType=INTEGER},
             </if>
-            <if test="salary.allSalary != null">
-                allSalary = #{salary.allSalary,jdbcType=INTEGER},
+            <if test="allSalary != null">
+                allSalary = #{allSalary,jdbcType=INTEGER},
             </if>
-            <if test="salary.pensionBase != null">
-                pensionBase = #{salary.pensionBase,jdbcType=INTEGER},
+            <if test="pensionBase != null">
+                pensionBase = #{pensionBase,jdbcType=INTEGER},
             </if>
-            <if test="salary.pensionPer != null">
-                pensionPer = #{salary.pensionPer,jdbcType=REAL},
+            <if test="pensionPer != null">
+                pensionPer = #{pensionPer,jdbcType=REAL},
             </if>
-            <if test="salary.createDate != null">
-                createDate = #{salary.createDate,jdbcType=TIMESTAMP},
+            <if test="createDate != null">
+                createDate = #{createDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="salary.medicalBase != null">
-                medicalBase = #{salary.medicalBase,jdbcType=INTEGER},
+            <if test="medicalBase != null">
+                medicalBase = #{medicalBase,jdbcType=INTEGER},
             </if>
-            <if test="salary.medicalPer != null">
-                medicalPer = #{salary.medicalPer,jdbcType=REAL},
+            <if test="medicalPer != null">
+                medicalPer = #{medicalPer,jdbcType=REAL},
             </if>
-            <if test="salary.accumulationFundBase != null">
-                accumulationFundBase = #{salary.accumulationFundBase,jdbcType=INTEGER},
+            <if test="accumulationFundBase != null">
+                accumulationFundBase = #{accumulationFundBase,jdbcType=INTEGER},
             </if>
-            <if test="salary.accumulationFundPer != null">
-                accumulationFundPer = #{salary.accumulationFundPer,jdbcType=REAL},
+            <if test="accumulationFundPer != null">
+                accumulationFundPer = #{accumulationFundPer,jdbcType=REAL},
             </if>
-            <if test="salary.name != null">
-                name = #{salary.name,jdbcType=VARCHAR},
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
             </if>
         </set>
-        where id = #{salary.id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
     </update>
-    <delete id="deleteSalary">
-        DELETE FROM salary WHERE id IN
-        <foreach collection="ids" separator="," item="id" open="(" close=")">
-            #{id}
-        </foreach>
-    </delete>
-    <delete id="deleteSalaryByEid">
-        DELETE FROM empsalary WHERE eid=#{eid}
-    </delete>
-    <insert id="addSidAndEid">
-        INSERT INTO empsalary set eid=#{eid},sid=#{sid}
-    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.texinc.loytesting.hrsystemplus.bean.Salary">
+    update salary
+    set basicSalary = #{basicSalary,jdbcType=INTEGER},
+      bonus = #{bonus,jdbcType=INTEGER},
+      lunchSalary = #{lunchSalary,jdbcType=INTEGER},
+      trafficSalary = #{trafficSalary,jdbcType=INTEGER},
+      allSalary = #{allSalary,jdbcType=INTEGER},
+      pensionBase = #{pensionBase,jdbcType=INTEGER},
+      pensionPer = #{pensionPer,jdbcType=REAL},
+      createDate = #{createDate,jdbcType=TIMESTAMP},
+      medicalBase = #{medicalBase,jdbcType=INTEGER},
+      medicalPer = #{medicalPer,jdbcType=REAL},
+      accumulationFundBase = #{accumulationFundBase,jdbcType=INTEGER},
+      accumulationFundPer = #{accumulationFundPer,jdbcType=REAL},
+      name = #{name,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

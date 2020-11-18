@@ -12,15 +12,17 @@ import java.util.List;
  */
 @Mapper
 public interface SalaryMapper {
-    int addSalary(@Param("salary") Salary salary);
+    int deleteByPrimaryKey(Integer id);
 
-    List<Salary> getAllSalary();
+    int insert(Salary record);
 
-    int updateSalary(@Param("salary") Salary salary);
+    int insertSelective(Salary record);
 
-    int deleteSalary(@Param("ids") String[] ids);
+    Salary selectByPrimaryKey(Integer id);
 
-    int deleteSalaryByEid(@Param("eid") Long eid);
+    int updateByPrimaryKeySelective(Salary record);
 
-    int addSidAndEid(@Param("sid") Integer sid, @Param("eid") Long eid);
+    int updateByPrimaryKey(Salary record);
+
+    List<Salary> getAllSalaries();
 }

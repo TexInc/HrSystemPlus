@@ -12,13 +12,19 @@ import java.util.List;
  */
 @Mapper
 public interface JobLevelMapper {
-    JobLevel getJobLevelByName(String name);
+    int deleteByPrimaryKey(Integer id);
 
-    int addJobLevel(@Param("jobLevel") JobLevel jobLevel);
+    int insert(JobLevel record);
+
+    int insertSelective(JobLevel record);
+
+    JobLevel selectByPrimaryKey(Integer id);
+
+    int updateByPrimaryKeySelective(JobLevel record);
+
+    int updateByPrimaryKey(JobLevel record);
 
     List<JobLevel> getAllJobLevels();
 
-    int deleteJobLevelById(@Param("ids") String[] ids);
-
-    int updateJobLevel(@Param("jobLevel") JobLevel jobLevel);
+    Integer deleteJobLevelsByIds(@Param("ids") Integer[] ids);
 }

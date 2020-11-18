@@ -11,13 +11,23 @@ import java.util.List;
  */
 @Mapper
 public interface MenuMapper {
-    List<Menu> getAllMenu();
+    int deleteByPrimaryKey(Integer id);
 
-    List<Menu> getMenusByHrId(Long hrId);
+    int insert(Menu record);
+
+    int insertSelective(Menu record);
+
+    Menu selectByPrimaryKey(Integer id);
+
+    int updateByPrimaryKeySelective(Menu record);
+
+    int updateByPrimaryKey(Menu record);
+
+    List<Menu> getMenusByHrId(Integer hrid);
 
     List<Menu> getAllMenusWithRole();
 
-    List<Menu> menuTree();
+    List<Menu> getAllMenus();
 
-    List<Long> getMenusByRid(Long rid);
+    List<Integer> getMidsByRid(Integer rid);
 }

@@ -12,13 +12,19 @@ import java.util.List;
  */
 @Mapper
 public interface PositionMapper {
-    int addPos(@Param("pos") Position pos);
+    int deleteByPrimaryKey(Integer id);
 
-    Position getPosByName(String name);
+    int insert(Position record);
 
-    List<Position> getAllPos();
+    int insertSelective(Position record);
 
-    int deletePosById(@Param("pids") String[] pids);
+    Position selectByPrimaryKey(Integer id);
 
-    int updatePosById(@Param("pos") Position position);
+    int updateByPrimaryKeySelective(Position record);
+
+    int updateByPrimaryKey(Position record);
+
+    List<Position> getAllPositions();
+
+    Integer deletePositionsByIds(@Param("ids") Integer[] ids);
 }

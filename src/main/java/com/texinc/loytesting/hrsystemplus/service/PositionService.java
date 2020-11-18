@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,24 +18,25 @@ import java.util.List;
 public class PositionService {
     @Autowired
     PositionMapper positionMapper;
-
-    public int addPos(Position pos) {
-        if (positionMapper.getPosByName(pos.getName()) != null) {
-            return -1;
-        }
-        return positionMapper.addPos(pos);
+    public List<Position> getAllPositions() {
+        return positionMapper.getAllPositions();
     }
 
-    public List<Position> getAllPos() {
-        return positionMapper.getAllPos();
+    public Integer addPosition(Position position) {
+        position.setEnabled(true);
+        position.setCreateDate(new Date());
+        return positionMapper.insertSelective(position);
     }
 
-    public boolean deletePosById(String pids) {
-        String[] split = pids.split(",");
-        return positionMapper.deletePosById(split) == split.length;
+    public Integer updatePositions(Position position) {
+        return positionMapper.updateByPrimaryKeySelective(position);
     }
 
-    public int updatePosById(Position position) {
-        return positionMapper.updatePosById(position);
+    public Integer deletePositionById(Integer id) {
+        return positionMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deletePositionsByIds(Integer[] ids) {
+        return positionMapper.deletePositionsByIds(ids);
     }
 }

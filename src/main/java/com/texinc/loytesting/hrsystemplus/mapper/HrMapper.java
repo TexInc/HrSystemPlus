@@ -13,23 +13,27 @@ import java.util.List;
  */
 @Mapper
 public interface HrMapper {
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(Hr record);
+
+    int insertSelective(Hr record);
+
+    Hr selectByPrimaryKey(Integer id);
+
+    int updateByPrimaryKeySelective(Hr record);
+
+    int updateByPrimaryKey(Hr record);
+
     Hr loadUserByUsername(String username);
 
-    List<Role> getRolesByHrId(Long id);
+    List<Role> getHrRolesById(Integer id);
 
-    int hrReg(@Param("username") String username, @Param("password") String password);
+    List<Hr> getAllHrs(@Param("hrid") Integer hrid, @Param("keywords") String keywords);
 
-    List<Hr> getHrsByKeywords(@Param("keywords") String keywords);
+    List<Hr> getAllHrsExceptCurrentHr(Integer id);
 
-    int updateHr(Hr hr);
+    Integer updatePasswd(@Param("hrid") Integer hrid, @Param("encodePass") String encodePass);
 
-    int deleteRoleByHrId(Long hrId);
-
-    int addRolesForHr(@Param("hrId") Long hrId, @Param("rids") Long[] rids);
-
-    Hr getHrById(Long hrId);
-
-    int deleteHr(Long hrId);
-
-    List<Hr> getAllHr(@Param("currentId") Long currentId);
+    Integer updateUserface(@Param("url") String url, @Param("id") Integer id);
 }

@@ -3,7 +3,10 @@ package com.texinc.loytesting.hrsystemplus.service;
 import com.texinc.loytesting.hrsystemplus.bean.Employee;
 import com.texinc.loytesting.hrsystemplus.bean.Nation;
 import com.texinc.loytesting.hrsystemplus.bean.PoliticsStatus;
+import com.texinc.loytesting.hrsystemplus.bean.RespPageBean;
 import com.texinc.loytesting.hrsystemplus.mapper.EmpMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,84 +27,65 @@ public class EmpService {
     @Autowired
     EmpMapper empMapper;
 
+    @Autowired
+    public final static Logger logger = LoggerFactory.getLogger(EmpService.class);
     SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
     SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
-    SimpleDateFormat birthdayFormat = new SimpleDateFormat("yyyy-MM-dd");
     DecimalFormat decimalFormat = new DecimalFormat("##.00");
 
-    public List<Nation> getAllNations() {
-        return empMapper.getAllNations();
+    public RespPageBean getEmployeeByPage(Integer page, Integer size, Employee employee, Date[] beginDateScope) {
+        if (page != null && size != null) {
+            page = (page - 1) * size;
+        }
+        List<Employee> data = empMapper.getEmployeeByPage(page, size, employee, beginDateScope);
+        Long total = empMapper.getTotal(employee, beginDateScope);
+        RespPageBean bean = new RespPageBean();
+        bean.setData(data);
+        bean.setTotal(total);
+        return bean;
     }
 
-    public List<PoliticsStatus> getAllPolitics() {
-        return empMapper.getAllPolitics();
-    }
-
-    public int addEmp(Employee employee) {
+    public Integer addEmp(Employee employee) {
         Date beginContract = employee.getBeginContract();
         Date endContract = employee.getEndContract();
-        Double contractTerm = (Double.parseDouble(yearFormat.format(endContract)) - Double.parseDouble(yearFormat.format(beginContract))) * 12 + Double.parseDouble(monthFormat.format(endContract)) - Double.parseDouble(monthFormat.format(beginContract));
-        employee.setContractTerm(Double.parseDouble(decimalFormat.format(contractTerm / 12)));
-        return empMapper.addEmp(employee);
+        double month = (Double.parseDouble(yearFormat.format(endContract)) - Double.parseDouble(yearFormat.format(beginContract))) * 12 + (Double.parseDouble(monthFormat.format(endContract)) - Double.parseDouble(monthFormat.format(beginContract)));
+        employee.setContractTerm(Double.parseDouble(decimalFormat.format(month / 12)));
+        int result = empMapper.insertSelective(employee);
+        return result;
     }
 
-    public Long getMaxWorkID() {
-        Long maxWorkID = empMapper.getMaxWorkID();
-        return maxWorkID == null ? 0 : maxWorkID;
+    public Integer maxWorkID() {
+        return empMapper.maxWorkID();
     }
 
-    public List<Employee> getEmployeeByPage(Integer page, Integer size, String keywords, Long politicId, Long nationId, Long posId, Long jobLevelId, String engageForm, Long departmentId, String beginDateScope) {
-        int start = (page - 1) * size;
-        Date startBeginDate = null;
-        Date endBeginDate = null;
-        if (beginDateScope != null && beginDateScope.contains(",")) {
-            try {
-                String[] split = beginDateScope.split(",");
-                startBeginDate = birthdayFormat.parse(split[0]);
-                endBeginDate = birthdayFormat.parse(split[1]);
-            } catch (ParseException e) {
-            }
+    public Integer deleteEmpByEid(Integer id) {
+        return empMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer updateEmp(Employee employee) {
+        return empMapper.updateByPrimaryKeySelective(employee);
+    }
+
+    public Integer addEmps(List<Employee> list) {
+        return empMapper.addEmps(list);
+    }
+
+    public RespPageBean getEmployeeByPageWithSalary(Integer page, Integer size) {
+        if (page != null && size != null) {
+            page = (page - 1) * size;
         }
-        return empMapper.getEmployeeByPage(start, size, keywords, politicId, nationId, posId, jobLevelId, engageForm, departmentId, startBeginDate, endBeginDate);
+        List<Employee> list = empMapper.getEmployeeByPageWithSalary(page, size);
+        RespPageBean respPageBean = new RespPageBean();
+        respPageBean.setData(list);
+        respPageBean.setTotal(empMapper.getTotal(null, null));
+        return respPageBean;
     }
 
-    public Long getCountByKeywords(String keywords, Long politicId, Long nationId, Long posId, Long jobLevelId, String engageForm, Long departmentId, String beginDateScope) {
-        Date startBeginDate = null;
-        Date endBeginDate = null;
-        if (beginDateScope != null && beginDateScope.contains(",")) {
-            try {
-                String[] split = beginDateScope.split(",");
-                startBeginDate = birthdayFormat.parse(split[0]);
-                endBeginDate = birthdayFormat.parse(split[1]);
-            } catch (ParseException e) {
-            }
-        }
-        return empMapper.getCountByKeywords(keywords, politicId, nationId, posId, jobLevelId, engageForm, departmentId, startBeginDate, endBeginDate);
+    public Integer updateEmployeeSalaryById(Integer eid, Integer sid) {
+        return empMapper.updateEmployeeSalaryById(eid, sid);
     }
 
-    public int updateEmp(Employee employee) {
-        Date beginContract = employee.getBeginContract();
-        Date endContract = employee.getEndContract();
-        Double contractTerm = (Double.parseDouble(yearFormat.format(endContract)) - Double.parseDouble(yearFormat.format(beginContract))) * 12 + Double.parseDouble(monthFormat.format(endContract)) - Double.parseDouble(monthFormat.format(beginContract));
-        employee.setContractTerm(Double.parseDouble(decimalFormat.format(contractTerm / 12)));
-        return empMapper.updateEmp(employee);
-    }
-
-    public boolean deleteEmpById(String ids) {
-        String[] split = ids.split(",");
-        return empMapper.deleteEmpById(split) == split.length;
-    }
-
-    public List<Employee> getAllEmployees() {
-        return empMapper.getEmployeeByPage(null, null, "", null, null, null, null, null, null, null, null);
-    }
-
-    public int addEmps(List<Employee> emps) {
-        return empMapper.addEmps(emps);
-    }
-
-    public List<Employee> getEmployeeByPageShort(Integer page, Integer size) {
-        int start = (page - 1) * size;
-        return empMapper.getEmployeeByPageShort(start,size);
+    public Employee getEmployeeById(Integer empId) {
+        return empMapper.getEmployeeById(empId);
     }
 }

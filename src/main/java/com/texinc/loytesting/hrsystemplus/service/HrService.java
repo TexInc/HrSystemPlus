@@ -3,6 +3,7 @@ package com.texinc.loytesting.hrsystemplus.service;
 import com.texinc.loytesting.hrsystemplus.bean.Hr;
 import com.texinc.loytesting.hrsystemplus.common.HrUtils;
 import com.texinc.loytesting.hrsystemplus.mapper.HrMapper;
+import com.texinc.loytesting.hrsystemplus.mapper.HrRoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,51 +23,59 @@ import java.util.List;
 public class HrService implements UserDetailsService {
     @Autowired
     HrMapper hrMapper;
+    @Autowired
+    HrRoleMapper hrRoleMapper;
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        Hr hr = hrMapper.loadUserByUsername(s);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Hr hr = hrMapper.loadUserByUsername(username);
         if (hr == null) {
-            throw new UsernameNotFoundException("用户名不对");
+            throw new UsernameNotFoundException("用户名不存在!");
         }
+        hr.setRoles(hrMapper.getHrRolesById(hr.getId()));
         return hr;
     }
 
-    public int hrReg(String username, String password) {
-        //如果用户名存在，返回错误
-        if (hrMapper.loadUserByUsername(username) != null) {
-            return -1;
-        }
+    public List<Hr> getAllHrs(String keywords) {
+        return hrMapper.getAllHrs(HrUtils.getCurrentHr().getId(),keywords);
+    }
+
+    public Integer updateHr(Hr hr) {
+        return hrMapper.updateByPrimaryKeySelective(hr);
+    }
+
+    @Transactional
+    public boolean updateHrRole(Integer hrid, Integer[] rids) {
+        hrRoleMapper.deleteByHrid(hrid);
+        return hrRoleMapper.addRole(hrid, rids) == rids.length;
+    }
+
+    public Integer deleteHrById(Integer id) {
+        return hrMapper.deleteByPrimaryKey(id);
+    }
+
+    public List<Hr> getAllHrsExceptCurrentHr() {
+        return hrMapper.getAllHrsExceptCurrentHr(HrUtils.getCurrentHr().getId());
+    }
+
+    public Integer updateHyById(Hr hr) {
+        return hrMapper.updateByPrimaryKeySelective(hr);
+    }
+
+    public boolean updateHrPasswd(String oldpass, String pass, Integer hrid) {
+        Hr hr = hrMapper.selectByPrimaryKey(hrid);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String encode = encoder.encode(password);
-        return hrMapper.hrReg(username, encode);
+        if (encoder.matches(oldpass, hr.getPassword())) {
+            String encodePass = encoder.encode(pass);
+            Integer result = hrMapper.updatePasswd(hrid, encodePass);
+            if (result == 1) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public List<Hr> getHrsByKeywords(String keywords) {
-        return hrMapper.getHrsByKeywords(keywords);
-    }
-
-    public int updateHr(Hr hr) {
-        return hrMapper.updateHr(hr);
-    }
-
-    public int updateHrRoles(Long hrId, Long[] rids) {
-        int i = hrMapper.deleteRoleByHrId(hrId);
-        return hrMapper.addRolesForHr(hrId, rids);
-    }
-
-    public Hr getHrById(Long hrId) {
-        return hrMapper.getHrById(hrId);
-    }
-
-    public int deleteHr(Long hrId) {
-        return hrMapper.deleteHr(hrId);
-    }
-
-    public List<Hr> getAllHrExceptAdmin() {
-        return hrMapper.getAllHr(HrUtils.getCurrentHr().getId());
-    }
-    public List<Hr> getAllHr() {
-        return hrMapper.getAllHr(null);
+    public Integer updateUserface(String url, Integer id) {
+        return hrMapper.updateUserface(url, id);
     }
 }
