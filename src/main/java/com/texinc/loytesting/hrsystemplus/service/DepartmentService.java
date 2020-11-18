@@ -13,7 +13,6 @@ import java.util.List;
  * @date 2020/11/12 5:01 PM
  */
 @Service
-@Transactional
 public class DepartmentService {
     @Autowired
     DepartmentMapper departmentMapper;

@@ -1,7 +1,6 @@
 package com.texinc.loytesting.hrsystemplus.mapper;
 
 import com.texinc.loytesting.hrsystemplus.bean.Position;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,7 +9,6 @@ import java.util.List;
  * @author i@loyio.me
  * @date 2020/11/12 7:05 PM
  */
-@Mapper
 public interface PositionMapper {
     int deleteByPrimaryKey(Integer id);
 

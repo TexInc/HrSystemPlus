@@ -14,7 +14,6 @@ import java.util.List;
  * @date 2020/11/12 7:37 PM
  */
 @Service
-@Transactional
 public class PositionService {
     @Autowired
     PositionMapper positionMapper;

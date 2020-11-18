@@ -1,7 +1,6 @@
 package com.texinc.loytesting.hrsystemplus.mapper;
 
 import com.texinc.loytesting.hrsystemplus.bean.Menu;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -9,7 +8,6 @@ import java.util.List;
  * @author i@loyio.me
  * @date 2020/11/12 7:05 PM
  */
-@Mapper
 public interface MenuMapper {
     int deleteByPrimaryKey(Integer id);
 

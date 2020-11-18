@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.TemplateEngine;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/employee/basic")
-public class EmpController {
+public class EmpBasicController {
     @Autowired
     EmpService employeeService;
     @Autowired
@@ -97,13 +98,13 @@ public class EmpController {
 
     @GetMapping("/export")
     public ResponseEntity<byte[]> exportData() {
-        List<Employee> list = (List<Employee>) employeeService.getAllEmployees();
-        return PoiUtils.exportEmp2Excel(list);
+        List<Employee> list = (List<Employee>) employeeService.getEmployeeByPage(null, null, new Employee(),null).getData();
+        return PoiUtils.employee2Excel(list);
     }
 
     @PostMapping("/import")
     public RespBean importData(MultipartFile file) throws IOException {
-        List<Employee> list = PoiUtils.exportEmp2Excel(file, nationService.getAllNations(), politicsstatusService.getAllPoliticsstatus(), departmentService.getAllDepartmentsWithOutChildren(), positionService.getAllPositions(), jobLevelService.getAllJobLevels());
+        List<Employee> list = PoiUtils.excel2Employee(file, nationService.getAllNations(), politicsstatusService.getAllPoliticsstatus(), departmentService.getAllDepartmentsWithOutChildren(), positionService.getAllPositions(), jobLevelService.getAllJobLevels());
         if (employeeService.addEmps(list) == list.size()) {
             return RespBean.ok("上传成功");
         }

@@ -4,7 +4,6 @@ import com.texinc.loytesting.hrsystemplus.bean.Role;
 import com.texinc.loytesting.hrsystemplus.mapper.RoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,7 +12,6 @@ import java.util.List;
  * @date 2020/11/12 7:38 PM
  */
 @Service
-@Transactional
 public class RoleService {
     @Autowired
     RoleMapper roleMapper;

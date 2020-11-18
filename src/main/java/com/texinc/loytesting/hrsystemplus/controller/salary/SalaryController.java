@@ -5,10 +5,7 @@ import com.texinc.loytesting.hrsystemplus.bean.Salary;
 import com.texinc.loytesting.hrsystemplus.service.EmpService;
 import com.texinc.loytesting.hrsystemplus.service.SalaryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,35 +19,33 @@ import java.util.List;
 public class SalaryController {
     @Autowired
     SalaryService salaryService;
-    @Autowired
-    EmpService empService;
 
-    @RequestMapping(value = "/salary", method = RequestMethod.POST)
-    public RespBean addSalaryCfg(Salary salary) {
+    @GetMapping("/")
+    public List<Salary> getAllSalaries() {
+        return salaryService.getAllSalaries();
+    }
+
+    @PostMapping("/")
+    public RespBean addSalary(@RequestBody Salary salary) {
         if (salaryService.addSalary(salary) == 1) {
             return RespBean.ok("添加成功!");
         }
         return RespBean.error("添加失败!");
     }
 
-    @RequestMapping(value = "/salary", method = RequestMethod.GET)
-    public List<Salary> salaries() {
-        return salaryService.getAllSalary();
+    @DeleteMapping("/{id}")
+    public RespBean deleteSalaryById(@PathVariable Integer id) {
+        if (salaryService.deleteSalaryById(id) == 1) {
+            return RespBean.ok("删除成功！");
+        }
+        return RespBean.error("删除失败！");
     }
 
-    @RequestMapping(value = "/salary", method = RequestMethod.PUT)
-    public RespBean updateSalary(Salary salary) {
-        if (salaryService.updateSalary(salary) == 1) {
+    @PutMapping("/")
+    public RespBean updateSalaryById(@RequestBody Salary salary) {
+        if (salaryService.updateSalaryById(salary) == 1) {
             return RespBean.ok("更新成功!");
         }
         return RespBean.error("更新失败!");
-    }
-
-    @RequestMapping(value = "/salary/{ids}", method = RequestMethod.DELETE)
-    public RespBean deleteSalary(@PathVariable String ids) {
-        if (salaryService.deleteSalary(ids) == 1) {
-            return RespBean.ok("删除成功!");
-        }
-        return RespBean.error("删除失败!");
     }
 }

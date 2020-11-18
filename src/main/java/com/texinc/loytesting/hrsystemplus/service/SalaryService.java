@@ -14,7 +14,6 @@ import java.util.List;
  * @date 2020/11/12 7:39 PM
  */
 @Service
-@Transactional
 public class SalaryService {
     @Autowired
     SalaryMapper salaryMapper;

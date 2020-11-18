@@ -19,7 +19,6 @@ import java.util.List;
  * @date 2020/11/12 7:02 PM
  */
 @Service
-@Transactional
 public class HrService implements UserDetailsService {
     @Autowired
     HrMapper hrMapper;

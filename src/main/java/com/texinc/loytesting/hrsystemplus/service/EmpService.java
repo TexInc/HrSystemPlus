@@ -1,18 +1,14 @@
 package com.texinc.loytesting.hrsystemplus.service;
 
 import com.texinc.loytesting.hrsystemplus.bean.Employee;
-import com.texinc.loytesting.hrsystemplus.bean.Nation;
-import com.texinc.loytesting.hrsystemplus.bean.PoliticsStatus;
 import com.texinc.loytesting.hrsystemplus.bean.RespPageBean;
 import com.texinc.loytesting.hrsystemplus.mapper.EmpMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +18,6 @@ import java.util.List;
  * @date 2020/11/12 4:05 PM
  */
 @Service
-@Transactional
 public class EmpService {
     @Autowired
     EmpMapper empMapper;

@@ -1,11 +1,7 @@
 package com.texinc.loytesting.hrsystemplus.mapper;
 
 import com.texinc.loytesting.hrsystemplus.bean.Employee;
-import com.texinc.loytesting.hrsystemplus.bean.Nation;
-import com.texinc.loytesting.hrsystemplus.bean.PoliticsStatus;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
@@ -14,7 +10,6 @@ import java.util.List;
  * @author i@loyio.me
  * @date 2020/11/12 4:12 PM
  */
-@Mapper
 public interface EmpMapper {
     int deleteByPrimaryKey(Integer id);
 
