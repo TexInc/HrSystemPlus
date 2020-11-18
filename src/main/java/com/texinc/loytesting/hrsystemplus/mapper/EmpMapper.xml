@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.texinc.loytesting.hrsystemplus.Mapper.EmpMapper">
+<mapper namespace="com.texinc.loytesting.hrsystemplus.mapper.EmpMapper">
     <resultMap id="BaseResultMap" type="com.texinc.loytesting.hrsystemplus.bean.Employee">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
@@ -38,7 +38,7 @@
             <id column="nid" property="id"/>
             <result column="nname" property="name"/>
         </association>
-        <association property="politicsstatus" javaType="com.texinc.loytesting.hrsystemplus.bean.Politicsstatus">
+        <association property="politicsstatus" javaType="com.texinc.loytesting.hrsystemplus.bean.PoliticsStatus">
             <id column="pid" property="id"/>
             <result column="pname" property="name"/>
         </association>

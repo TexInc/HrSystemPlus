@@ -23,7 +23,7 @@ import java.util.Map;
 @RequestMapping("/employee/basic")
 public class EmpBasicController {
     @Autowired
-    EmpService employeeService;
+    EmpService empService;
     @Autowired
     NationService nationService;
     @Autowired
@@ -37,12 +37,12 @@ public class EmpBasicController {
 
     @GetMapping("/")
     public RespPageBean getEmployeeByPage(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, Employee employee, Date[] beginDateScope) {
-        return employeeService.getEmployeeByPage(page, size, employee,beginDateScope);
+        return empService.getEmployeeByPage(page, size, employee,beginDateScope);
     }
 
     @PostMapping("/")
     public RespBean addEmp(@RequestBody Employee employee) {
-        if (employeeService.addEmp(employee) == 1) {
+        if (empService.addEmp(employee) == 1) {
             return RespBean.ok("添加成功!");
         }
         return RespBean.error("添加失败!");
@@ -50,7 +50,7 @@ public class EmpBasicController {
 
     @DeleteMapping("/{id}")
     public RespBean deleteEmpByEid(@PathVariable Integer id) {
-        if (employeeService.deleteEmpByEid(id) == 1) {
+        if (empService.deleteEmpByEid(id) == 1) {
             return RespBean.ok("删除成功!");
         }
         return RespBean.error("删除失败!");
@@ -58,7 +58,7 @@ public class EmpBasicController {
 
     @PutMapping("/")
     public RespBean updateEmp(@RequestBody Employee employee) {
-        if (employeeService.updateEmp(employee) == 1) {
+        if (empService.updateEmp(employee) == 1) {
             return RespBean.ok("更新成功!");
         }
         return RespBean.error("更新失败!");
@@ -87,7 +87,7 @@ public class EmpBasicController {
     @GetMapping("/maxWorkID")
     public RespBean maxWorkID() {
         RespBean respBean = RespBean.build().setStatus(200)
-                .setObj(String.format("%08d", employeeService.maxWorkID() + 1));
+                .setObj(String.format("%08d", empService.maxWorkID() + 1));
         return respBean;
     }
 
@@ -98,14 +98,14 @@ public class EmpBasicController {
 
     @GetMapping("/export")
     public ResponseEntity<byte[]> exportData() {
-        List<Employee> list = (List<Employee>) employeeService.getEmployeeByPage(null, null, new Employee(),null).getData();
+        List<Employee> list = (List<Employee>) empService.getEmployeeByPage(null, null, new Employee(),null).getData();
         return PoiUtils.employee2Excel(list);
     }
 
     @PostMapping("/import")
     public RespBean importData(MultipartFile file) throws IOException {
         List<Employee> list = PoiUtils.excel2Employee(file, nationService.getAllNations(), politicsstatusService.getAllPoliticsstatus(), departmentService.getAllDepartmentsWithOutChildren(), positionService.getAllPositions(), jobLevelService.getAllJobLevels());
-        if (employeeService.addEmps(list) == list.size()) {
+        if (empService.addEmps(list) == list.size()) {
             return RespBean.ok("上传成功");
         }
         return RespBean.error("上传失败");

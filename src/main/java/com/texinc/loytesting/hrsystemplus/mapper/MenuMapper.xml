@@ -12,7 +12,7 @@
         <result column="iconCls" property="iconCls" jdbcType="VARCHAR" />
         <result column="parentId" property="parentId" jdbcType="INTEGER" />
         <result column="enabled" property="enabled" jdbcType="BIT" />
-        <association property="meta" javaType="org.javaboy.vhr.model.Meta">
+        <association property="meta" javaType="com.texinc.loytesting.hrsystemplus.bean.MenuMeta">
             <result column="keepAlive" property="keepAlive" jdbcType="BIT" />
             <result column="requireAuth" property="requireAuth" jdbcType="BIT" />
         </association>
@@ -27,7 +27,7 @@
             <result column="iconCls2" property="iconCls" jdbcType="VARCHAR" />
             <result column="parentId2" property="parentId" jdbcType="INTEGER" />
             <result column="enabled2" property="enabled" jdbcType="BIT" />
-            <association property="meta" javaType="org.javaboy.vhr.model.Meta">
+            <association property="meta" javaType="com.texinc.loytesting.hrsystemplus.bean.MenuMeta">
                 <result column="keepAlive2" property="keepAlive" jdbcType="BIT" />
                 <result column="requireAuth2" property="requireAuth" jdbcType="BIT" />
             </association>
@@ -43,10 +43,10 @@
     <resultMap id="MenuWithChildren" type="com.texinc.loytesting.hrsystemplus.bean.Menu" extends="BaseResultMap">
         <id column="id1" property="id"/>
         <result column="name1" property="name"/>
-        <collection property="children" ofType="org.javaboy.vhr.model.Menu">
+        <collection property="children" ofType="com.texinc.loytesting.hrsystemplus.bean.Menu">
             <id column="id2" property="id"/>
             <result column="name2" property="name"/>
-            <collection property="children" ofType="org.javaboy.vhr.model.Menu">
+            <collection property="children" ofType="com.texinc.loytesting.hrsystemplus.bean.Menu">
                 <id column="id3" property="id"/>
                 <result column="name3" property="name"/>
             </collection>

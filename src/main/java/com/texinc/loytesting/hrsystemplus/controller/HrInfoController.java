@@ -1,8 +1,8 @@
 package com.texinc.loytesting.hrsystemplus.controller;
 
+import com.texinc.loytesting.hrsystemplus.config.FastDFSUtils;
 import com.texinc.loytesting.hrsystemplus.bean.Hr;
 import com.texinc.loytesting.hrsystemplus.bean.RespBean;
-import com.texinc.loytesting.hrsystemplus.config.FastDFSUtils;
 import com.texinc.loytesting.hrsystemplus.service.HrService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
